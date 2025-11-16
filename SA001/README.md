@@ -1,60 +1,76 @@
 # SA-001 — Sales Analysis
 
-This Java project demonstrates stream operations, functional programming, aggregation and grouping on CSV sales data.
+A small Java project demonstrating CSV parsing, Java Stream-based aggregations, and simple console reporting for sales data.
 
-## What I implemented
-- Header-aware CSV loader that handles different column names (e.g. `orderId`, `product`, `region`, `quantity`, `unitPrice`).
-- Derives `category` when missing using a small product->category map (Widget/Gadget -> Electronics; Gizmo -> Accessories).
-- Analysis methods using Java Streams:
+## Overview
+
+This project loads a CSV of sales records, derives missing category information using a lightweight mapping, and provides analysis utilities such as total revenue, quantity and revenue aggregations, top products, monthly revenue, median order value, and simple console-print helpers.
+
+## Features
+
+- Header-aware CSV loader that maps columns by header name (e.g. `orderId`, `product`, `region`, `quantity`, `unitPrice`).
+- Derives `category` when missing using a product→category mapping (e.g. Widget/Gadget → Electronics; Gizmo → Accessories).
+- Analysis methods implemented with Java Streams:
   - totalRevenue
   - quantityByCategory
   - revenueByRegion
-  - bestSellingProduct (aggregated by total quantity)
+  - bestSellingProduct (by total quantity)
   - avgPriceByCategory
-- Unit tests for all analysis methods (JUnit 5)
-- Print helper methods
-  - `SalesAnalyzer` now includes convenience methods that print analysis results directly to the console:
-  - `printTotalRevenue(List<SalesRecord>)` — prints total revenue formatted as currency
-  - `printQuantityByCategory(List<SalesRecord>)` — prints quantities per category
-  - `printRevenueByRegion(List<SalesRecord>)` — prints revenue per region formatted as currency
-  - `printTopNProducts(List<SalesRecord>, int)` — prints top N product names
-  - `printTopNProductsWithCounts(List<SalesRecord>, int)` — prints top N products with quantities
-  - `printMonthlyRevenue(List<SalesRecord>)` — prints YYYY-MM keyed revenue
-  - `printMedianOrderValue(List<SalesRecord>)` — prints median order value formatted as currency
-  - `printPercentContributionByProduct(List<SalesRecord>)` — prints percent contribution by product
-  - `printAsciiBarChartByProductRevenue(List<SalesRecord>, int)` — prints an ASCII bar chart of revenue by product
-  - `printAvgPriceByCategory(List<SalesRecord>)` — prints average price per category formatted as currency
+- Convenience printing helpers in `SalesAnalyzer`:
+  - printTotalRevenue(List<SalesRecord>)
+  - printQuantityByCategory(List<SalesRecord>)
+  - printRevenueByRegion(List<SalesRecord>)
+  - printTopNProducts(List<SalesRecord>, int)
+  - printTopNProductsWithCounts(List<SalesRecord>, int)
+  - printMonthlyRevenue(List<SalesRecord>)
+  - printMedianOrderValue(List<SalesRecord>)
+  - printPercentContributionByProduct(List<SalesRecord>)
+  - printAsciiBarChartByProductRevenue(List<SalesRecord>, int)
+  - printAvgPriceByCategory(List<SalesRecord>)
 
-## Main behavior
-- The `sa001.Main` entry point loads the CSV so the application can be used programmatically. This keeps interactive/automated use separate from presentation.
-- To see console output, either run the unit tests (they include console-output tests) or call the print helpers from your own runner (example below).
+## Project entry points
 
-## Assumptions and dataset choices
-- The provided `data/sales.csv` uses headers: `orderId,date,customer,product,region,quantity,unitPrice`.
-  The loader reads headers and maps fields accordingly.
-- The CSV does not contain a `category` column. I derived category values via a small mapping inside `SalesAnalyzer`.
+- `sa001.Main` — a small runner that demonstrates loading the CSV files and printing analysis results.
+- Unit tests (JUnit 5) cover the analysis methods and some console-output helpers. See `src/test/java/sa001`.
 
-## How to build and run
-Prerequisite: Java 11+ and Maven installed.
+## Assumptions and data
 
-## Build and run tests:
+- The bundled `data/sales.csv` uses headers: `orderId,date,customer,product,region,quantity,unitPrice`.
+- There is no `category` column in the sample CSV. Categories are derived from a small mapping inside `SalesAnalyzer`. To change categories, edit `data/category-mapping.csv` or update the `DEFAULT_CATEGORY` map in the code.
+
+## Prerequisites
+
+- Java 11 or newer
+- Maven 3.x
+
+## Build and test
+
+Run the unit tests:
 
 ```bash
+cd "/Users/sivaspc/Documents/My Projects/Intuit/SA001"
 mvn test
 ```
 
-Run the program (prints results to console):
+## Run the demo
+
+Run the main demo class (prints results to console):
 
 ```bash
+cd "/Users/sivaspc/Documents/My Projects/Intuit/SA001"
 mvn compile exec:java -Dexec.mainClass=sa001.Main
 ```
 
-Notes
-- The code is intentionally small and focuses on stream-based transformations and aggregations.
-- If you want a different category mapping or a CSV with explicit categories, update the `data/sales.csv` or the `DEFAULT_CATEGORY` map in `SalesAnalyzer`.
+## Notes
 
-Sample console output (captured from a run using the included `data/sales.csv` and `data/category-mapping.csv`):
+- The code emphasizes clarity and use of Java Streams for aggregations. It is intentionally small and easy to read.
+- To use your own CSV, replace `data/sales.csv` or provide a file with compatible headers.
 
+## Sample output
+
+The following is an example console output produced by the demo using the included sample data:
+
+```
 === SALES ANALYSIS REPORT ===
 Total Revenue: $1,145.04
 
@@ -97,3 +113,4 @@ East            | ############# (185.45)
 Average Price by Category:
 Accessories: $14.25
 Electronics: $55.33
+```
