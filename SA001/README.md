@@ -48,7 +48,7 @@ This project loads a CSV of sales records, derives missing category information 
 Run the unit tests:
 
 ```bash
-cd "/Users/sivaspc/Documents/My Projects/Intuit/SA001"
+cd SA001
 mvn test
 ```
 
@@ -57,7 +57,7 @@ mvn test
 Run the main demo class (prints results to console):
 
 ```bash
-cd "/Users/sivaspc/Documents/My Projects/Intuit/SA001"
+cd SA001
 mvn compile exec:java -Dexec.mainClass=sa001.Main
 ```
 
