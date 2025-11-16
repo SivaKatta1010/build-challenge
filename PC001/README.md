@@ -1,4 +1,4 @@
-# PC001 — Producer/Consumer (updated)
+# PC001 — Producer/Consumer
 
 This repository is a compact demonstration of the classic Producer-Consumer pattern in Java. It includes two buffer implementations, a small observer/memento subsystem, unit tests, and a standalone test suite that prints results to the console.
 
